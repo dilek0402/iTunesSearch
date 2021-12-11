@@ -12,9 +12,10 @@
 		D7E4AD482763F13E00EBA998 /* SearchHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD472763F13E00EBA998 /* SearchHomeViewModel.swift */; };
 		D7E4AD4A2763F15C00EBA998 /* SearchDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD492763F15C00EBA998 /* SearchDetailViewModel.swift */; };
 		D7E4AD4C2763F2EF00EBA998 /* iTunesSearchDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD4B2763F2EF00EBA998 /* iTunesSearchDataController.swift */; };
-		D7E4AD4E2763FC5E00EBA998 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD4D2763FC5E00EBA998 /* NetworkManager.swift */; };
+		D7E4AD4E2763FC5E00EBA998 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD4D2763FC5E00EBA998 /* URLSession+Extension.swift */; };
 		D7E4AD502763FE1F00EBA998 /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD4F2763FE1F00EBA998 /* NetworkConfiguration.swift */; };
 		D7E4AD52276400BC00EBA998 /* iTunesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD51276400BC00EBA998 /* iTunesDataModel.swift */; };
+		D7E4AD5427648E2A00EBA998 /* iTunesSearchDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD5327648E2A00EBA998 /* iTunesSearchDataProtocol.swift */; };
 		D7FF5A512763BC4500B8181A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FF5A502763BC4500B8181A /* AppDelegate.swift */; };
 		D7FF5A532763BC4500B8181A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FF5A522763BC4500B8181A /* SceneDelegate.swift */; };
 		D7FF5A552763BC4500B8181A /* SearchHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FF5A542763BC4500B8181A /* SearchHomeViewController.swift */; };
@@ -49,9 +50,10 @@
 		D7E4AD472763F13E00EBA998 /* SearchHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHomeViewModel.swift; sourceTree = "<group>"; };
 		D7E4AD492763F15C00EBA998 /* SearchDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewModel.swift; sourceTree = "<group>"; };
 		D7E4AD4B2763F2EF00EBA998 /* iTunesSearchDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchDataController.swift; sourceTree = "<group>"; };
-		D7E4AD4D2763FC5E00EBA998 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D7E4AD4D2763FC5E00EBA998 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		D7E4AD4F2763FE1F00EBA998 /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		D7E4AD51276400BC00EBA998 /* iTunesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesDataModel.swift; sourceTree = "<group>"; };
+		D7E4AD5327648E2A00EBA998 /* iTunesSearchDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchDataProtocol.swift; sourceTree = "<group>"; };
 		D7FF5A4D2763BC4500B8181A /* iTunesSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7FF5A502763BC4500B8181A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7FF5A522763BC4500B8181A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				D7E4AD4B2763F2EF00EBA998 /* iTunesSearchDataController.swift */,
 				D7E4AD51276400BC00EBA998 /* iTunesDataModel.swift */,
+				D7E4AD5327648E2A00EBA998 /* iTunesSearchDataProtocol.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -132,7 +135,7 @@
 		D7E4AD3F2763E7AE00EBA998 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				D7E4AD4D2763FC5E00EBA998 /* NetworkManager.swift */,
+				D7E4AD4D2763FC5E00EBA998 /* URLSession+Extension.swift */,
 				D7E4AD4F2763FE1F00EBA998 /* NetworkConfiguration.swift */,
 			);
 			path = Networking;
@@ -347,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7E4AD52276400BC00EBA998 /* iTunesDataModel.swift in Sources */,
-				D7E4AD4E2763FC5E00EBA998 /* NetworkManager.swift in Sources */,
+				D7E4AD4E2763FC5E00EBA998 /* URLSession+Extension.swift in Sources */,
 				D7E4AD502763FE1F00EBA998 /* NetworkConfiguration.swift in Sources */,
 				D7FF5A552763BC4500B8181A /* SearchHomeViewController.swift in Sources */,
 				D7FF5A512763BC4500B8181A /* AppDelegate.swift in Sources */,
@@ -357,6 +360,7 @@
 				D7E4AD452763F0F000EBA998 /* iTunesSearchRouter.swift in Sources */,
 				D7E4AD4C2763F2EF00EBA998 /* iTunesSearchDataController.swift in Sources */,
 				D7E4AD482763F13E00EBA998 /* SearchHomeViewModel.swift in Sources */,
+				D7E4AD5427648E2A00EBA998 /* iTunesSearchDataProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

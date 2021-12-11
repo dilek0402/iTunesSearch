@@ -40,6 +40,7 @@ final class SearchHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        viewModel.fetchMedia()
     }
     
     // MARK: - Private  Methods

@@ -11,7 +11,8 @@ final class SearchHomeViewModel {
     
     private var dataController:iTunesSearchDataController
     private var router: iTunesSearchRouter
-
+    private var md: ITunesDataModel?
+    
     
     // MARK: - Init
     
@@ -24,7 +25,14 @@ final class SearchHomeViewModel {
     // MARK: - Public Methods
     
     func fetchMedia() {
-        dataController.fetchMedia()
+        dataController.fetchMedia(searchValue: "blue") { [weak self] resultModel, error in
+            if error != nil {
+                return
+            }
+            guard let model = resultModel else {
+                return
+            }
+            self?.md = model
+        }
     }
-    
 }

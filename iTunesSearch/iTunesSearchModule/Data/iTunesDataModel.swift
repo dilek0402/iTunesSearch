@@ -8,7 +8,6 @@
 // MARK: - iTunes Model
 
 struct ITunesDataModel: Codable {
-    
     let resultCount: Int
     let results: [Result]
 }
@@ -16,7 +15,6 @@ struct ITunesDataModel: Codable {
 // MARK: - Result Model
 
 struct Result: Codable {
-    
     var screenshotUrls: [String]?
     var artistName: String?
 }

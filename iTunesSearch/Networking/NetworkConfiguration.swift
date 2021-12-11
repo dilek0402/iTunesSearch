@@ -10,11 +10,14 @@ struct NetworkConfiguration {
     // MARK: - Properties
     
     static var basePath: String {
-        return "https://itunes.apple.com"
+        return "https://itunes.apple.com/"
     }
     
     static  var path: String {
         return "&media=software"
     }
     
+    static  var searchPath: String {
+        return "search?term="
+    }
 }
