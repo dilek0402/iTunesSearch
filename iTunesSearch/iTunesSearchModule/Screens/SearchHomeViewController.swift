@@ -13,16 +13,19 @@ final class SearchHomeViewController: UIViewController {
     
     private enum Constant {
         static let reuseModuleItemIdentifier : String = "moduleCell"
+        static let headerIdentifier : String = "headerCell"
         static let searchBarSize: CGFloat = 50
         static let title = "iTunes Search"
         static let delayTime = 800
         static let margin: CGFloat = 10
+        static let emptyText = "Arama sonuçlarınızı burada görünecektir."
     }
     
     // MARK: - Properties
     
     var viewModel: SearchHomeViewModel!
-    
+    fileprivate var searchingWorkItem: DispatchWorkItem?
+
     // MARK: - Layout Properties
     
     private var searchBar: UISearchBar = {
@@ -31,21 +34,35 @@ final class SearchHomeViewController: UIViewController {
         return searchBar
     }()
     
-    var collectionView : UICollectionView = {
+    private var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0.0;
-        layout.minimumLineSpacing = 0.0;
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumLineSpacing = 15
+        layout.minimumLineSpacing = 10
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(iTunesInfoCollectionViewCell.self,
                                 forCellWithReuseIdentifier: Constant.reuseModuleItemIdentifier)
+        collectionView.register(iTunesInfoCollectionHeaderView.self,
+                               forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                               withReuseIdentifier: Constant.headerIdentifier)
         return collectionView
+    }()
+    
+    private var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.text = Constant.emptyText
+        label.sizeToFit()
+        label.textAlignment = .center
+        label.textColor = Theme.Palette.redColor
+        label.numberOfLines = 0
+        return label
     }()
     
     
@@ -73,6 +90,7 @@ final class SearchHomeViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         searchBar.delegate = self
+        collectionView.backgroundView = emptyLabel
     }
     
     private func applyStyling() {
@@ -96,7 +114,15 @@ final class SearchHomeViewController: UIViewController {
     }
     
     private func search(searchValue: String) {
+        emptyLabel.isHidden = true
+        viewModel.removeItunesImages()
+        viewModel.setupItunesImages()
         viewModel.fetchMedia(searchValue: searchValue)
+    }
+    
+    private func setupDefault() {
+        emptyLabel.isHidden = false
+        viewModel.removeItunesImages()
     }
 }
 
@@ -105,7 +131,7 @@ extension SearchHomeViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.reuseModuleItemIdentifier,
                                                          for: indexPath) as? iTunesInfoCollectionViewCell {
-            cell.configureCell(item: viewModel.images[indexPath.row])
+            cell.configureCell(item: viewModel.getItemForSection(sectionIndex: indexPath.section, itemIndex: indexPath.row))
             return cell
         }
         return UICollectionViewCell()
@@ -113,13 +139,63 @@ extension SearchHomeViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        viewModel.getSectionCount()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        viewModel.images.count
+        viewModel.getItemCountForSection(index: section)
     }
+}
+
+extension SearchHomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width-40
+        return CGSize(width: screenWidth-80, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: sizeForItem(), height: sizeForItem())
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            if let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: Constant.headerIdentifier,
+                for: indexPath) as? iTunesInfoCollectionHeaderView {
+                headerView.configure(title: viewModel.getSection(index: indexPath.section))
+                return headerView
+                
+            }
+            return UICollectionReusableView()
+        }
+        return UICollectionReusableView()
+        
+    }
+    
+    private func sizeForItem() -> CGFloat {
+           let screenSize = UIScreen.main.bounds
+           let screenWidth = screenSize.width
+           let numberOfItemsPerRow:CGFloat = 3
+           let spacingBetweenCells:CGFloat = 10
+           let sideSpacing:CGFloat = 20
+           return (screenWidth-(2 * sideSpacing) - ((numberOfItemsPerRow - 1) * spacingBetweenCells))/numberOfItemsPerRow
+       }
 }
 
 extension SearchHomeViewController: SearchHomeViewModelDelegate {
@@ -131,17 +207,28 @@ extension SearchHomeViewController: SearchHomeViewModelDelegate {
 }
 
 extension SearchHomeViewController: UISearchBarDelegate {
+    
+
     func searchBar(_ searchBar: UISearchBar,
                    textDidChange searchText: String) {
+        searchingWorkItem?.cancel()
         guard  !searchText.isEmpty else {
+            setupDefault()
             return
         }
+        
         if searchText.count > 2 {
             let debouncedFunc = searchBar.debounce(interval: Constant.delayTime,
                                                    queue: .main) {
-                self.search(searchValue: searchText)
+                let currentWorkItem = DispatchWorkItem {
+                    self.search(searchValue: searchText)
+                }
+                self.searchingWorkItem = currentWorkItem
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2,
+                                              execute: currentWorkItem)
             }
             debouncedFunc()
+
         }
     }
 }

@@ -14,7 +14,7 @@ public class ImageCache {
     
     public static let publicCache = ImageCache()
     private let cachedImages = NSCache<NSURL, UIImage>()
-    private var loadingResponses = [NSURL: [(UIImage?) -> Swift.Void]]()
+    private var loadingResponses = [NSURL: [(UIImage?, Int) -> Swift.Void]]()
     
     // MARK: - Methods
     
@@ -22,12 +22,11 @@ public class ImageCache {
         return cachedImages.object(forKey: url)
     }
     
-    
-    final func load(url: NSURL, completion: @escaping (UIImage?) -> Swift.Void) {
+    public final func load(url: NSURL, completion: @escaping (UIImage?, Int) -> Swift.Void) {
         // Check for a cached image.
         if let cachedImage = image(url: url) {
             DispatchQueue.main.async {
-                completion(cachedImage)
+                completion(cachedImage,0)
             }
             return
         }
@@ -43,7 +42,7 @@ public class ImageCache {
             guard let responseData = data, let image = UIImage(data: responseData),
                   let blocks = self.loadingResponses[url], error == nil else {
                       DispatchQueue.main.async {
-                          completion(nil)
+                          completion(nil,0)
                       }
                       return
                   }
@@ -51,10 +50,28 @@ public class ImageCache {
             self.cachedImages.setObject(image, forKey: url, cost: responseData.count)
             for block in blocks {
                 DispatchQueue.main.async {
-                    block(image)
+                    block(image, self.getSectionNumberForImage(count: responseData.count))
                 }
                 return
             }
         }.resume()
+    }
+    
+    private func getSectionNumberForImage(count: Int) -> Int {
+        var section = 0
+        let size = Double(count) / 1024
+        switch size {
+        case 0..<100:
+            section = 0
+        case 100..<250:
+            section = 1
+        case 250..<500:
+            section = 2
+        case 500...:
+            section = 3
+        default:
+            section = 0
+        }
+        return section
     }
 }

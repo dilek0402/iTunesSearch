@@ -17,6 +17,8 @@ struct Theme {
         static let tertiaryColor: UIColor = .lightGray
         static let backgroundColor: UIColor = .systemBackground
         static let secondaryBackgroundColor: UIColor = .secondarySystemBackground
+        static let redColor: UIColor = .red
+
     }
 }
 

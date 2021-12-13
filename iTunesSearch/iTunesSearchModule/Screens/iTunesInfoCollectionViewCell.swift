@@ -36,7 +36,7 @@ final class iTunesInfoCollectionViewCell: UICollectionViewCell {
     
     var logoImageView : UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 4.0
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,9 +71,7 @@ final class iTunesInfoCollectionViewCell: UICollectionViewCell {
         addConstraints([logoImageView.topAnchor.constraint(equalTo: imageContainerView.topAnchor),
                         logoImageView.bottomAnchor.constraint(equalTo: imageContainerView.bottomAnchor),
                         logoImageView.leadingAnchor.constraint(equalTo: imageContainerView.leadingAnchor),
-                        logoImageView.trailingAnchor.constraint(equalTo: imageContainerView.trailingAnchor),
-                        logoImageView.widthAnchor.constraint(equalToConstant: Constant.itemSize),
-                        logoImageView.heightAnchor.constraint(equalToConstant: Constant.itemSize)])
+                        logoImageView.trailingAnchor.constraint(equalTo: imageContainerView.trailingAnchor)])
         
     }
     // MARK: - Public Methods
