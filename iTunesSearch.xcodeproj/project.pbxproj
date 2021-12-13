@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7E06055276756FA006AE048 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E06054276756FA006AE048 /* ImageCache.swift */; };
+		D7E0605727675716006AE048 /* ImageURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E0605627675716006AE048 /* ImageURLProtocol.swift */; };
+		D7E06059276757C2006AE048 /* MultiThreadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E06058276757C2006AE048 /* MultiThreadHelper.swift */; };
+		D7E0605B276781C3006AE048 /* iTunesInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E0605A276781C3006AE048 /* iTunesInfoCollectionViewCell.swift */; };
+		D7E0605D276783F6006AE048 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E0605C276783F6006AE048 /* Theme.swift */; };
+		D7E0606027679334006AE048 /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E0605F27679334006AE048 /* UISearchBar+Extension.swift */; };
 		D7E4AD422763E85D00EBA998 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD412763E85D00EBA998 /* SearchDetailViewController.swift */; };
 		D7E4AD452763F0F000EBA998 /* iTunesSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD442763F0F000EBA998 /* iTunesSearchRouter.swift */; };
 		D7E4AD482763F13E00EBA998 /* SearchHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E4AD472763F13E00EBA998 /* SearchHomeViewModel.swift */; };
@@ -45,6 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D7E06054276756FA006AE048 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		D7E0605627675716006AE048 /* ImageURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageURLProtocol.swift; sourceTree = "<group>"; };
+		D7E06058276757C2006AE048 /* MultiThreadHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiThreadHelper.swift; sourceTree = "<group>"; };
+		D7E0605A276781C3006AE048 /* iTunesInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		D7E0605C276783F6006AE048 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D7E0605F27679334006AE048 /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		D7E4AD412763E85D00EBA998 /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		D7E4AD442763F0F000EBA998 /* iTunesSearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchRouter.swift; sourceTree = "<group>"; };
 		D7E4AD472763F13E00EBA998 /* SearchHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHomeViewModel.swift; sourceTree = "<group>"; };
@@ -94,6 +106,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D7E06052276756DA006AE048 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D7E06053276756E6006AE048 /* ImageHelper */,
+				D7E06058276757C2006AE048 /* MultiThreadHelper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		D7E06053276756E6006AE048 /* ImageHelper */ = {
+			isa = PBXGroup;
+			children = (
+				D7E06054276756FA006AE048 /* ImageCache.swift */,
+				D7E0605627675716006AE048 /* ImageURLProtocol.swift */,
+			);
+			path = ImageHelper;
+			sourceTree = "<group>";
+		};
+		D7E0605E27679318006AE048 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D7E0605F27679334006AE048 /* UISearchBar+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		D7E4AD3B2763E55800EBA998 /* iTunesSearchModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +148,7 @@
 			children = (
 				D7FF5A542763BC4500B8181A /* SearchHomeViewController.swift */,
 				D7E4AD412763E85D00EBA998 /* SearchDetailViewController.swift */,
+				D7E0605A276781C3006AE048 /* iTunesInfoCollectionViewCell.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -144,6 +183,7 @@
 		D7E4AD402763E7BA00EBA998 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				D7E0605C276783F6006AE048 /* Theme.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -192,6 +232,8 @@
 		D7FF5A4F2763BC4500B8181A /* iTunesSearch */ = {
 			isa = PBXGroup;
 			children = (
+				D7E0605E27679318006AE048 /* Extension */,
+				D7E06052276756DA006AE048 /* Helper */,
 				D7E4AD3B2763E55800EBA998 /* iTunesSearchModule */,
 				D7E4AD3F2763E7AE00EBA998 /* Networking */,
 				D7E4AD402763E7BA00EBA998 /* Style */,
@@ -350,17 +392,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7E4AD52276400BC00EBA998 /* iTunesDataModel.swift in Sources */,
+				D7E06055276756FA006AE048 /* ImageCache.swift in Sources */,
 				D7E4AD4E2763FC5E00EBA998 /* URLSession+Extension.swift in Sources */,
 				D7E4AD502763FE1F00EBA998 /* NetworkConfiguration.swift in Sources */,
 				D7FF5A552763BC4500B8181A /* SearchHomeViewController.swift in Sources */,
 				D7FF5A512763BC4500B8181A /* AppDelegate.swift in Sources */,
 				D7E4AD4A2763F15C00EBA998 /* SearchDetailViewModel.swift in Sources */,
 				D7E4AD422763E85D00EBA998 /* SearchDetailViewController.swift in Sources */,
+				D7E0605B276781C3006AE048 /* iTunesInfoCollectionViewCell.swift in Sources */,
 				D7FF5A532763BC4500B8181A /* SceneDelegate.swift in Sources */,
+				D7E0605727675716006AE048 /* ImageURLProtocol.swift in Sources */,
 				D7E4AD452763F0F000EBA998 /* iTunesSearchRouter.swift in Sources */,
+				D7E06059276757C2006AE048 /* MultiThreadHelper.swift in Sources */,
 				D7E4AD4C2763F2EF00EBA998 /* iTunesSearchDataController.swift in Sources */,
 				D7E4AD482763F13E00EBA998 /* SearchHomeViewModel.swift in Sources */,
 				D7E4AD5427648E2A00EBA998 /* iTunesSearchDataProtocol.swift in Sources */,
+				D7E0606027679334006AE048 /* UISearchBar+Extension.swift in Sources */,
+				D7E0605D276783F6006AE048 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

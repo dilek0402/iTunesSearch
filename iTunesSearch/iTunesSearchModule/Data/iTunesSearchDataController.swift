@@ -8,7 +8,6 @@
 import Foundation
 
 final class iTunesSearchDataController: iTunesSearchDataProtocol {
-    
     func fetchMedia(searchValue: String,
                     completion: @escaping (ITunesDataModel?, Error?) -> Void) {
         let urlString = NetworkConfiguration.basePath +
