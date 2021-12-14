@@ -16,7 +16,8 @@ final class iTunesSearchRouter {
     init() {
         let controller = SearchHomeViewController()
         let dataController = iTunesSearchDataController()
-        let viewModel = SearchHomeViewModel(dataController: dataController, router: self)
+        let viewModel = SearchHomeViewModel(dataController: dataController,
+                                            router: self)
         controller.viewModel = viewModel
         initialViewController = controller
     }
@@ -25,10 +26,13 @@ final class iTunesSearchRouter {
 
 extension iTunesSearchRouter {
     
-    func proceedToSearchDetailViewController() {
+    func proceedToSearchDetailViewController(image: UIImage) {
         let controller = SearchDetailViewController()
-        let viewModel = SearchDetailViewModel()
-        initialViewController = controller
-        
+        let viewModel = SearchDetailViewModel(router: self)
+        viewModel.image = image
+        controller.viewModel = viewModel
+        initialViewController.navigationController?.present(controller,
+                                                            animated: true,
+                                                            completion: nil)
     }
 }

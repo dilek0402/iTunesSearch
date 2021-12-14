@@ -48,6 +48,11 @@ final class SearchHomeViewModel {
         iTunesImageList?[index].sectionName ?? ""
     }
     
+    func selectItem(sectionIndex: Int, itemIndex: Int) {
+        let image = iTunesImageList?[sectionIndex].screenshots?[itemIndex] ?? UIImage()
+        proceedToSearchDetailViewController(image: image)
+    }
+    
     func fetchMedia(searchValue: String) {
         dataController.fetchMedia(searchValue: searchValue) { [weak self] resultModel, error in
             if error != nil {
@@ -88,6 +93,10 @@ final class SearchHomeViewModel {
                 }
             }
         }
+    }
+    
+    private func proceedToSearchDetailViewController(image: UIImage) {
+        router.proceedToSearchDetailViewController(image: image)
     }
 }
 

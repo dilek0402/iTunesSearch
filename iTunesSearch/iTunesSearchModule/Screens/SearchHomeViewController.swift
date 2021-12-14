@@ -143,6 +143,13 @@ extension SearchHomeViewController: UICollectionViewDelegate, UICollectionViewDa
                         numberOfItemsInSection section: Int) -> Int {
         viewModel.getItemCountForSection(index: section)
     }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectItem(sectionIndex: indexPath.section,
+                             itemIndex: indexPath.row)
+        
+    }
 }
 
 extension SearchHomeViewController: UICollectionViewDelegateFlowLayout {
@@ -168,7 +175,9 @@ extension SearchHomeViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: sizeForItem(), height: sizeForItem())
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionView.elementKindSectionHeader {
             if let headerView = collectionView.dequeueReusableSupplementaryView(
