@@ -85,7 +85,7 @@ final class SearchHomeViewModel {
     private func getImages(results: [Result]) {
         screenShots = results.compactMap { $0 }.compactMap { $0.screenshotUrls }.flatMap{ $0}.map{ $0}
         
-        if let screenShots = screenShots {
+        if let screenShots = screenShots, screenShots.count > 0 {
             MultiThreadHelper.multiThread.downloadImage(imageList: screenShots) { [weak self] image, section in
                 if let image = image {
                     self?.iTunesImageList?[section].screenshots?.append(image)
