@@ -16,16 +16,15 @@ final class SearchHomeViewController: UIViewController {
         static let headerIdentifier : String = "headerCell"
         static let searchBarSize: CGFloat = 50
         static let title = "iTunes Search"
-        static let delayTime = 800
+        static let delayTime = 1500
         static let margin: CGFloat = 10
-        static let emptyText = "Arama sonuçlarınızı burada görünecektir."
+        static let emptyText = "Arama sonuçlarınızı buradan görebilirsiniz"
     }
     
     // MARK: - Properties
     
     var viewModel: SearchHomeViewModel!
-    fileprivate var searchingWorkItem: DispatchWorkItem?
-
+    
     // MARK: - Layout Properties
     
     private var searchBar: UISearchBar = {
@@ -38,7 +37,8 @@ final class SearchHomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect.zero,
+                                              collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -48,15 +48,15 @@ final class SearchHomeViewController: UIViewController {
         collectionView.register(iTunesInfoCollectionViewCell.self,
                                 forCellWithReuseIdentifier: Constant.reuseModuleItemIdentifier)
         collectionView.register(iTunesInfoCollectionHeaderView.self,
-                               forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                               withReuseIdentifier: Constant.headerIdentifier)
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: Constant.headerIdentifier)
         return collectionView
     }()
     
     private var emptyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.text = Constant.emptyText
         label.sizeToFit()
         label.textAlignment = .center
@@ -64,8 +64,6 @@ final class SearchHomeViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    
-    
     
     // MARK: - Init  Methods
     
@@ -76,7 +74,6 @@ final class SearchHomeViewController: UIViewController {
         setupConstraints()
         setupCollectionView()
         viewModel.delegate = self
-        
     }
     
     // MARK: - Private  Methods
@@ -167,7 +164,7 @@ extension SearchHomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         return CGSize(width: sizeForItem(), height: sizeForItem())
     }
     
@@ -189,13 +186,13 @@ extension SearchHomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     private func sizeForItem() -> CGFloat {
-           let screenSize = UIScreen.main.bounds
-           let screenWidth = screenSize.width
-           let numberOfItemsPerRow:CGFloat = 3
-           let spacingBetweenCells:CGFloat = 10
-           let sideSpacing:CGFloat = 20
-           return (screenWidth-(2 * sideSpacing) - ((numberOfItemsPerRow - 1) * spacingBetweenCells))/numberOfItemsPerRow
-       }
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let numberOfItemsPerRow:CGFloat = 3
+        let spacingBetweenCells:CGFloat = 10
+        let sideSpacing:CGFloat = 20
+        return (screenWidth-(2 * sideSpacing) - ((numberOfItemsPerRow - 1) * spacingBetweenCells))/numberOfItemsPerRow
+    }
 }
 
 extension SearchHomeViewController: SearchHomeViewModelDelegate {
@@ -207,29 +204,18 @@ extension SearchHomeViewController: SearchHomeViewModelDelegate {
 }
 
 extension SearchHomeViewController: UISearchBarDelegate {
-    
-
     func searchBar(_ searchBar: UISearchBar,
                    textDidChange searchText: String) {
-        searchingWorkItem?.cancel()
-        guard  !searchText.isEmpty else {
+        guard let text = searchBar.text, !text.isEmpty, text.count > 3 else {
             setupDefault()
             return
         }
-        
-        if searchText.count > 2 {
-            let debouncedFunc = searchBar.debounce(interval: Constant.delayTime,
-                                                   queue: .main) {
-                let currentWorkItem = DispatchWorkItem {
-                    self.search(searchValue: searchText)
-                }
-                self.searchingWorkItem = currentWorkItem
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2,
-                                              execute: currentWorkItem)
-            }
-            debouncedFunc()
-
+        let debouncedFunc = searchBar.debounce(interval: Constant.delayTime,
+                                               queue: .main) {
+            self.viewModel.cancelable()
+            self.search(searchValue: text)
         }
+        debouncedFunc()
     }
 }
 

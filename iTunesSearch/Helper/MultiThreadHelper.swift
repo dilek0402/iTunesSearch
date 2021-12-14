@@ -30,4 +30,9 @@ public class MultiThreadHelper {
             }
         }
     }
+    
+    public final func cancelable() {
+        ImageCache.publicCache.cancalBlock()
+    }
+    
 }

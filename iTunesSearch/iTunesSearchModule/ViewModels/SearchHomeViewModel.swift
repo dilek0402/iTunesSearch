@@ -17,11 +17,10 @@ final class SearchHomeViewModel {
     
     private var dataController:iTunesSearchDataController
     private var router: iTunesSearchRouter
-    private var md: ITunesDataModel?
     private var screenShots: [String]?
     
     private var iTunesImageList: [iTunesImages]? = []
-
+    
     
     // MARK: - Init
     
@@ -57,7 +56,6 @@ final class SearchHomeViewModel {
             guard let model = resultModel else {
                 return
             }
-            self?.md = model
             self?.getImages(results: model.results)
         }
     }
@@ -73,17 +71,17 @@ final class SearchHomeViewModel {
         }
     }
     
-    // MARK: - Private Methods
+    func cancelable() {
+        MultiThreadHelper.multiThread.cancelable()
+    }
     
-
+    // MARK: - Private Methods
     
     private func getImages(results: [Result]) {
         screenShots = results.compactMap { $0 }.compactMap { $0.screenshotUrls }.flatMap{ $0}.map{ $0}
-        let evenList = screenShots?.enumerated().filter({$0.offset % 2 == 0}).map({ $0.element})
-        let oddList = screenShots?.enumerated().filter({$0.offset % 2 != 0}).map({ $0.element})
         
-        if let evenList = evenList {
-            MultiThreadHelper.multiThread.downloadImage(imageList: evenList) { [weak self] image, section in
+        if let screenShots = screenShots {
+            MultiThreadHelper.multiThread.downloadImage(imageList: screenShots) { [weak self] image, section in
                 if let image = image {
                     self?.iTunesImageList?[section].screenshots?.append(image)
                     self?.delegate?.imageLoaded()

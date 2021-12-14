@@ -63,4 +63,8 @@ class ImageURLProtocol: URLProtocol {
         config.protocolClasses = [ImageURLProtocol.classForCoder()]
         return  URLSession(configuration: config)
     }
+    
+    static func cancelBlock() {
+        
+    }
 }

@@ -25,8 +25,9 @@ public class ImageCache {
     public final func load(url: NSURL, completion: @escaping (UIImage?, Int) -> Swift.Void) {
         // Check for a cached image.
         if let cachedImage = image(url: url) {
+            let section = getSectionNumberForImage(count: cachedImage.pngData()?.count ?? 0)
             DispatchQueue.main.async {
-                completion(cachedImage,0)
+                completion(cachedImage,section)
             }
             return
         }
@@ -73,5 +74,9 @@ public class ImageCache {
             section = 0
         }
         return section
+    }
+    
+    func cancalBlock() {
+        ImageURLProtocol.cancelBlock()
     }
 }
